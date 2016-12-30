@@ -1,18 +1,15 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
-import java.util.regex.Matcher;
+import shitamatsuge.haifuri.MainActivity;
+import shitamatsuge.haifuri.R;
 
 /**
  * Created by user1 on 2016/05/29.

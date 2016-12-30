@@ -3,27 +3,32 @@ package shitamatsuge.haifuri;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.animation.ObjectAnimator;
-import android.os.*;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.logging.*;
+
+import shitamatsuge.haifuri.CharaViews.CharaView;
+import shitamatsuge.haifuri.CharaViews.IseView;
+import shitamatsuge.haifuri.CharaViews.KokoView;
+import shitamatsuge.haifuri.CharaViews.MaronView;
+import shitamatsuge.haifuri.CharaViews.MayView;
+import shitamatsuge.haifuri.CharaViews.MiView;
+import shitamatsuge.haifuri.CharaViews.MikanView;
+import shitamatsuge.haifuri.CharaViews.MikeView;
+import shitamatsuge.haifuri.CharaViews.MinamiView;
+import shitamatsuge.haifuri.CharaViews.SiroView;
+import shitamatsuge.haifuri.CharaViews.SoraView;
+import shitamatsuge.haifuri.CharaViews.ZonaView;
 
 
 public class MainActivity extends AppCompatActivity {

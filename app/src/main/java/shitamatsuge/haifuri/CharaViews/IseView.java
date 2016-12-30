@@ -1,4 +1,4 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import shitamatsuge.haifuri.R;
+
 /**
  * Created by user1 on 2016/05/29.
  */
-public class MaronView extends CharaView {
+public class IseView extends CharaView {
     private String TAG = "CharaView";
 
-    public MaronView(Context context, AttributeSet attrs) {
+    public IseView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.maron, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.ise, this);
         mBase = (FrameLayout)findViewById(R.id.parent);
         mNormal = new FrameLayout[2];
         mWalk = new FrameLayout[6];
@@ -60,12 +62,12 @@ public class MaronView extends CharaView {
         int r = (int)(Math.random() * 2);
         switch (r) {
             case 0:
-                mRandomAction[0].setBackgroundResource(R.drawable.maron_motto_teyande);
-                mRandomAction[1].setBackgroundResource(R.drawable.maron_motto_teyande_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.ise_tawawa);
+                mRandomAction[1].setBackgroundResource(R.drawable.ise_tawawa_r);
                 break;
             default:
-                mRandomAction[0].setBackgroundResource(R.drawable.maron_teyande);
-                mRandomAction[1].setBackgroundResource(R.drawable.maron_teyande_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.ise_ufufu);
+                mRandomAction[1].setBackgroundResource(R.drawable.ise_ufufu_r);
                 break;
         }
     }}

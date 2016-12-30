@@ -1,4 +1,4 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import shitamatsuge.haifuri.R;
+
 /**
  * Created by user1 on 2016/05/29.
  */
-public class MikeView extends CharaView {
+public class MinamiView extends CharaView {
     private String TAG = "CharaView";
 
-    public MikeView(Context context, AttributeSet attrs) {
+    public MinamiView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.mike, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.minami, this);
         mBase = (FrameLayout)findViewById(R.id.parent);
         mNormal = new FrameLayout[2];
         mWalk = new FrameLayout[6];
@@ -57,23 +59,15 @@ public class MikeView extends CharaView {
 
     @Override
     protected void setRandomActionImage() {
-        int r = (int)(Math.random() * 3);
+        int r = (int)(Math.random() * 2);
         switch (r) {
             case 0:
-                mRandomAction[0].setBackgroundResource(R.drawable.mike_boushi);
-                mRandomAction[1].setBackgroundResource(R.drawable.mike_boushi_r);
-                break;
-            case 1:
-                mRandomAction[0].setBackgroundResource(R.drawable.mike_banana);
-                mRandomAction[1].setBackgroundResource(R.drawable.mike_banana_r);
-                break;
-            case 2:
-                mRandomAction[0].setBackgroundResource(R.drawable.mike_hai);
-                mRandomAction[1].setBackgroundResource(R.drawable.mike_hai);
+                mRandomAction[0].setBackgroundResource(R.drawable.minami_drag);
+                mRandomAction[1].setBackgroundResource(R.drawable.minami_drag_r);
                 break;
             default:
-                mRandomAction[0].setBackgroundResource(R.drawable.mike_boushi);
-                mRandomAction[1].setBackgroundResource(R.drawable.mike_boushi_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.minami_vitamin);
+                mRandomAction[1].setBackgroundResource(R.drawable.minami_vitamin_r);
                 break;
         }
     }}
