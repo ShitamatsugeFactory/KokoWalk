@@ -11,9 +11,6 @@ import android.widget.FrameLayout;
 import shitamatsuge.haifuri.MainActivity;
 import shitamatsuge.haifuri.R;
 
-/**
- * Created by user1 on 2016/05/29.
- */
 public class KokoView extends CharaView {
     private String TAG = "CharaView";
 
@@ -131,7 +128,6 @@ public class KokoView extends CharaView {
                 break;
         }
     }
-
 
     int mFieldActionCounter = 0;
     private int mRandomActionCounter = 0;

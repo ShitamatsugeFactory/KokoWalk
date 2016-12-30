@@ -10,9 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-/**
- * Created by user1 on 2016/09/17.
- */
 public class Ringo extends Suica {
     private ImageView mRingo;
     public Ringo(Context context, AttributeSet attrs, float x1, float y1, float x2, float y2, int time, Button b1, Button b2, Button bDame, long pointBase_) {

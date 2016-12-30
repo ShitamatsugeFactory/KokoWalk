@@ -38,7 +38,7 @@
                         android:layout_height="match_parent"
                         android:id="@+id/bg"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/bg_kankyo"/>
+                        android:src="@drawable/bg_01"/>
 
 
 
@@ -102,126 +102,141 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:layout_weight="1"
                     android:background="#ee29000a">
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_koko"
+                            android:id="@+id/menu_item_0"
+                            android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_mi"
+                            android:id="@+id/menu_item_1"
+                            android:layout_margin="2dp" />
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_koko"
-                        android:id="@+id/menu_item_0"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_mi"
-                        android:id="@+id/menu_item_1"
-                        android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_irizaki"
+                            android:id="@+id/menu_item_2"
+                            android:layout_margin="2dp" />
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_irizaki"
-                        android:id="@+id/menu_item_2"
-                        android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_maron"
+                            android:id="@+id/menu_item_3"
+                            android:layout_margin="2dp" />
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_maron"
-                        android:id="@+id/menu_item_3"
-                        android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_mike"
+                            android:id="@+id/menu_item_4"
+                            android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_siro"
+                            android:id="@+id/menu_item_5"
+                            android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_zona"
+                            android:id="@+id/menu_item_6"
+                            android:layout_margin="2dp" />
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_mike"
-                        android:id="@+id/menu_item_9"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_siro"
-                        android:id="@+id/menu_item_11"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_zona"
-                        android:id="@+id/menu_item_8"
-                        android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_minami"
+                            android:id="@+id/menu_item_7"
+                            android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_mikan"
+                            android:id="@+id/menu_item_8"
+                            android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_ise"
+                            android:id="@+id/menu_item_9"
+                            android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_sora"
+                            android:id="@+id/menu_item_10"
+                            android:layout_margin="2dp" />
+                    </LinearLayout>>
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_minami"
-                        android:id="@+id/menu_item_12"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_mikan"
-                        android:id="@+id/menu_item_15"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_ise"
-                        android:id="@+id/menu_item_16"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_sora"
-                        android:id="@+id/menu_item_17"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="228dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_mariko_doujou"
-                        android:id="@+id/menu_item_4"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_mei_doujou"
-                        android:id="@+id/menu_item_5"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_koko_doujou"
-                        android:id="@+id/menu_item_6"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_koko_doujou_hard"
-                        android:id="@+id/menu_item_10"
-                        android:layout_margin="2dp" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_oyabun_doujou"
-                        android:id="@+id/menu_item_7"
-                        android:layout_margin="2dp" />
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_doitsu_doujou"
-                        android:id="@+id/menu_item_14"
-                        android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="228dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_mariko_doujou"
+                            android:id="@+id/menu_item_naginata_01"
+                            android:layout_margin="2dp" />
 
-                    <ImageView
-                        android:layout_width="228dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_kakumei_cooking"
-                        android:id="@+id/menu_item_13"
-                        android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_mei_doujou"
+                            android:id="@+id/menu_item_naginata_02"
+                            android:layout_margin="2dp" />
+
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_koko_doujou"
+                            android:id="@+id/menu_item_naginata_03"
+                            android:layout_margin="2dp" />
+
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_koko_doujou_hard"
+                            android:id="@+id/menu_item_naginata_04"
+                            android:layout_margin="2dp" />
+
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_oyabun_doujou"
+                            android:id="@+id/menu_item_naginata_05"
+                            android:layout_margin="2dp" />
+
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_doitsu_doujou"
+                            android:id="@+id/menu_item_naginata_06"
+                            android:layout_margin="2dp" />
+
+                        <ImageView
+                            android:layout_width="228dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_kakumei_cooking"
+                            android:id="@+id/menu_item_naginata_07"
+                            android:layout_margin="2dp" />
+                    </LinearLayout>
+
                     <ImageView
                         android:layout_width="76dp"
                         android:layout_height="76dp"
                         android:src="@drawable/menu_item_nop"
-                        android:id="@+id/menu_item_18"
                         android:layout_margin="2dp" />
                 </LinearLayout>
             </HorizontalScrollView>
