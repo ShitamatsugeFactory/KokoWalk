@@ -2,17 +2,23 @@ package shitamatsuge.haifuri;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
     CharaView manager;
     FrameLayout field;
     ImageView mBackGround;
-    int cocoCnt = 0;
+
+    int[] mCounter;
     int mBgIndex = 0;
 
     public static Button mWashiButton;
@@ -80,31 +87,40 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[16] = (ImageView)findViewById(R.id.menu_item_9);
         mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_10);
 
+        mCounter = new int[20];
+        FpsTextView fpsTextView = new FpsTextView(this);
+        ((FrameLayout) findViewById(R.id.fpsTextViewFrame)).removeAllViews();
+        ((FrameLayout)findViewById(R.id.fpsTextViewFrame)).addView(fpsTextView);
+        fpsTextView.setText("start");
+
         charaViews = new ArrayList<CharaView>();
         mMenuItems[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mWashiButton.setVisibility(View.VISIBLE);
                 manager.create(winX, winY, field, charaViews, new KokoView(getBaseContext(), null), walkSec);
-                cocoCnt++;
+                addCounter(0);
             }
         });
         mMenuItems[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MiView(getBaseContext(), null), walkSec);
+                addCounter(1);
             }
         });
         mMenuItems[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MayView(getBaseContext(), null), walkSec);
+                addCounter(2);
             }
         });
         mMenuItems[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MaronView(getBaseContext(), null), walkSec);
+                addCounter(3);
             }
         });
         mMenuItems[4].setOnClickListener(new View.OnClickListener() {
@@ -149,12 +165,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new ZonaView(getBaseContext(), null), walkSec);
+                addCounter(8);
             }
         });
         mMenuItems[9].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MikeView(getBaseContext(), null), walkSec);
+                addCounter(9);
             }
         });
         mMenuItems[10].setOnClickListener(new View.OnClickListener() {
@@ -171,12 +189,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new SiroView(getBaseContext(), null), walkSec);
+                addCounter(11);
             }
         });
         mMenuItems[12].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MinamiView(getBaseContext(), null), walkSec);
+                addCounter(12);
             }
         });
         mMenuItems[13].setOnClickListener(new View.OnClickListener() {
@@ -203,18 +223,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MikanView(getBaseContext(), null), walkSec);
+                addCounter(15);
             }
         });
         mMenuItems[16].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new IseView(getBaseContext(), null), walkSec);
+                addCounter(16);
             }
         });
         mMenuItems[17].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new SoraView(getBaseContext(), null), walkSec);
+                addCounter(17);
             }
         });
         washiHandler = new Handler();
@@ -436,6 +459,10 @@ public class MainActivity extends AppCompatActivity {
                 charaViews.remove(0);
             }
         }
+        for (int i = 0; i < mCounter.length; i++) {
+            mCounter[i] = 0;
+        }
+        ((TextView)findViewById(R.id.counterTextView)).setText(0 + " x ココ！");
     }
 
     @Override
@@ -445,4 +472,48 @@ public class MainActivity extends AppCompatActivity {
         winY = field.getMeasuredHeight();
     }
 
+    private void addCounter(int index) {
+        mCounter[index]++;
+        int sum = 0;
+        for(int i = 0; i < mCounter.length; i++) {
+            sum += mCounter[i];
+        }
+        ((TextView)findViewById(R.id.counterTextView)).setText(sum + " x ココ！");
+    }
+
+    private static class FpsTextView extends TextView {
+        private int INTERVAL = 1000;
+        private long mTime = Integer.MAX_VALUE / 2;
+        private int mCount = 0;
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        public FpsTextView(Context context) {
+            super(context);
+        }
+        public FpsTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        @Override
+        protected void onDraw(final Canvas canvas) {
+            super.onDraw(canvas);
+            final long time = System.currentTimeMillis();
+            Log.d("test", INTERVAL + " , " + (time - mTime));
+            if ( INTERVAL < time - mTime ) {
+                final double fps = mCount * 1000.0 / (time - mTime);
+                mCount = 0;
+                mTime = time;
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        FpsTextView.this.setText("" + df.format(fps));//画面に表示
+                    }
+                });
+            }
+            else {
+                ++mCount;
+            }
+            invalidate();
+        }
+    }
 }
