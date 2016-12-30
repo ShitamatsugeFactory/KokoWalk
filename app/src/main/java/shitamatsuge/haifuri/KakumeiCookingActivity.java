@@ -10,16 +10,13 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by user1 on 2016/09/17.
- */
+
 public class KakumeiCookingActivity extends NaginataActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int layout = getIntent().getIntExtra("layout", R.layout.activity_cooking_attyan);
         mWaitTime = getIntent().getIntExtra("waitTime", 400);
-
 
         setContentView(layout);
         backGround = (FrameLayout) findViewById(R.id.backGround);
@@ -54,7 +51,6 @@ public class KakumeiCookingActivity extends NaginataActivity {
                 mFailed = true;
             }
         });
-
     }
 
     /*
@@ -84,7 +80,6 @@ public class KakumeiCookingActivity extends NaginataActivity {
         startTime += 0;
 
         /* スタンバイ用の画像を表示 */
-        // nop
         mTimerText.setText("STAGE : " + stage + " Ready.");
         mTimerText.setVisibility(View.VISIBLE);
         if (TimerHandler == null) {
@@ -170,7 +165,6 @@ public class KakumeiCookingActivity extends NaginataActivity {
         Button  bDame = damageButtons[0];
         final Ringo ringo = new Ringo(getBaseContext(),null,startX, startY, endX, endY, timer, b1, b2, bDame, mPointBase);
         backGround.addView(ringo);
-
 
         TimerHandler.postDelayed(new Runnable() {
             @Override

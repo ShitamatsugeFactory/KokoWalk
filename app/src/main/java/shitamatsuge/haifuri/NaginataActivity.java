@@ -16,9 +16,6 @@ import java.math.BigInteger;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by user1 on 2016/07/05.
- */
 public class NaginataActivity extends Activity {
     Runnable mRunnableUpperLeft;
     Runnable mRunnableMiddleLeft;
@@ -395,7 +392,6 @@ public class NaginataActivity extends Activity {
                     SharedPreferences.Editor editor = mPreference.edit();
                     editor.putLong("maxScore", maxScore);
                     editor.apply();
-                    Log.d("test", "new record.");
                 }
                 backGround.removeView(suica);
             }

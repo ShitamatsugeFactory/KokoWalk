@@ -1,4 +1,4 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.content.Context;
 import android.os.Handler;
@@ -6,6 +6,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
+
+import shitamatsuge.haifuri.R;
 
 /**
  * Created by user1 on 2016/05/29.
@@ -93,11 +95,11 @@ public class SoraView extends CharaView {
             int currentSec = 0;
             int diff = (int)(Math.random() * 50 + 30);
 
-            mTouchUpper[0+mDirection].setVisibility(View.VISIBLE);
-            mNormal[0].setVisibility(View.INVISIBLE);
-            mNormal[1].setVisibility(View.INVISIBLE);
+            mTouchUpper[0+mDirection].setVisibility(VISIBLE);
+            mNormal[0].setVisibility(INVISIBLE);
+            mNormal[1].setVisibility(INVISIBLE);
 
-            mTouchUpper[(1+mDirection)%2].setVisibility(View.INVISIBLE);
+            mTouchUpper[(1+mDirection)%2].setVisibility(INVISIBLE);
             int currentWalk = mCurrentWalkIndex;
             for(int i = 0; mSec > currentSec; i++) {
                 final int index = (i % moveRibonImageId.length / 2) * 2;
@@ -105,7 +107,7 @@ public class SoraView extends CharaView {
                     @Override
                     public void run() {
                         mTouchUpper[mDirection].setBackgroundDrawable(getResources().getDrawable(moveRibonImageId[index + mDirection]));
-                        mTouchUpper[mDirection].setVisibility(View.VISIBLE);
+                        mTouchUpper[mDirection].setVisibility(VISIBLE);
                     }
                 }, currentSec);
                 currentSec += diff;
@@ -114,7 +116,7 @@ public class SoraView extends CharaView {
                 @Override
                 public void run() {
                     mLock = false;
-                    mNormal[mDirection].setVisibility(View.VISIBLE);
+                    mNormal[mDirection].setVisibility(VISIBLE);
                     mTouchUpper[0].setVisibility(INVISIBLE);
                     mTouchUpper[1].setVisibility(INVISIBLE);
                 }

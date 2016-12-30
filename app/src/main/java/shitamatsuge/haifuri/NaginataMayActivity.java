@@ -1,17 +1,10 @@
 package shitamatsuge.haifuri;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-/**
- * Created by user1 on 2016/07/05.
- */
 public class NaginataMayActivity extends NaginataActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
