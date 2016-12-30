@@ -211,7 +211,7 @@ public class CharaView extends LinearLayout {
         }
     }
 
-    int MAX_CHARA = 128;
+    int MAX_CHARA = 65535;
     public void create(float winX, float winY,FrameLayout field, ArrayList<CharaView> charaViews,CharaView chara, int walkSec) {
         try {
             if (charaViews.size() >= MAX_CHARA) {
@@ -244,7 +244,7 @@ public class CharaView extends LinearLayout {
             objectAnimator.start();
             //button.setText("納沙幸子 * " + charaViews.size());
         } catch (OutOfMemoryError e){
-            Toast.makeText(field.getContext(), "メモリがいっぱいです",Toast.LENGTH_SHORT).show();
+            Toast.makeText(field.getContext(), "メモリがいっぱいです : " + charaViews.size() + "人",Toast.LENGTH_SHORT).show();
         }
     }
 
