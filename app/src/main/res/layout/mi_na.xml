@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:id="@+id/parent"
+    android:layout_width="@dimen/chara_width"
+    android:layout_height="@dimen/chara_height"
+>
+
+    <FrameLayout
+        android:background="@drawable/mi_walk1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:id="@+id/normal">
+    </FrameLayout>
+    <FrameLayout
+        android:background="@drawable/mi_walk1_r"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/normal_r">
+    </FrameLayout>
+
+    <FrameLayout
+        android:background="@drawable/mi_walk1"
+        android:layout_width="match_parent"
+        android:id="@+id/walk0"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    </FrameLayout>
+    <FrameLayout
+        android:background="@drawable/mi_walk2"
+        android:layout_width="match_parent"
+        android:id="@+id/walk1"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    </FrameLayout>
+    <FrameLayout
+        android:background="@drawable/mi_walk3"
+        android:layout_width="match_parent"
+        android:id="@+id/walk2"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    </FrameLayout>
+
+    <FrameLayout
+        android:background="@drawable/mi_walk1_r"
+        android:layout_width="match_parent"
+        android:id="@+id/walk0_r"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    </FrameLayout>
+    <FrameLayout
+        android:background="@drawable/mi_walk2_r"
+        android:layout_width="match_parent"
+        android:id="@+id/walk1_r"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    </FrameLayout>
+    <FrameLayout
+        android:background="@drawable/mi_walk3_r"
+        android:layout_width="match_parent"
+        android:id="@+id/walk2_r"
+        android:layout_height="match_parent"
+        android:visibility="invisible">
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/washimoikou2"
+        android:visibility="invisible"
+        android:id="@+id/upper">
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/washimoikou2_r"
+        android:visibility="invisible"
+        android:id="@+id/upper_r">
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/washimoikou2"
+        android:visibility="invisible"
+        android:id="@+id/downer">
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/washimoikou2_r"
+        android:visibility="invisible"
+        android:id="@+id/downer_r">
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:id="@+id/random">
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"
+        android:id="@+id/random_r">
+    </FrameLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/touch_up"
+            android:layout_weight="1"></FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:id="@+id/touch_down"
+            android:layout_weight="1" />
+    </LinearLayout>
+</FrameLayout>

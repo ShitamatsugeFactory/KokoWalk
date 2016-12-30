@@ -1,0 +1,231 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="5">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="8"
+                    android:id="@+id/field"
+                    android:paddingTop="0dp">
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/bg"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/bg_kankyo"/>
+
+
+
+                </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:id="@+id/linearLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/chara_height"
+                        android:layout_gravity="bottom">
+
+                        <FrameLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"></FrameLayout>
+
+                        <ImageView
+                            android:layout_width="@dimen/chara_width"
+                            android:layout_height="@dimen/chara_height"
+                            android:id="@+id/washiView"
+                            android:src="@drawable/washimoikou2"
+                            android:layout_gravity="bottom|right" />
+                    </LinearLayout>
+
+
+                    <Button
+                        android:layout_width="76dp"
+                        android:layout_height="38dp"
+                        android:id="@+id/clearButton"
+                        android:layout_gravity="left|top"
+                        android:visibility="visible"
+                        android:background="@drawable/menu_item_clear" />
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ワシもいるぞ！"
+                        android:id="@+id/washiButton"
+                        android:layout_gravity="bottom|right"
+                        android:visibility="invisible" />
+                </FrameLayout>
+            </FrameLayout>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.02">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="86dp"
+                android:id="@+id/horizontalScrollView">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="86dp"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_weight="1"
+                    android:background="#ee29000a">
+
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_koko"
+                        android:id="@+id/menu_item_0"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_mi"
+                        android:id="@+id/menu_item_1"
+                        android:layout_margin="2dp" />
+
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_irizaki"
+                        android:id="@+id/menu_item_2"
+                        android:layout_margin="2dp" />
+
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_maron"
+                        android:id="@+id/menu_item_3"
+                        android:layout_margin="2dp" />
+
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_mike"
+                        android:id="@+id/menu_item_9"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_siro"
+                        android:id="@+id/menu_item_11"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_zona"
+                        android:id="@+id/menu_item_8"
+                        android:layout_margin="2dp" />
+
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_minami"
+                        android:id="@+id/menu_item_12"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_mikan"
+                        android:id="@+id/menu_item_15"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_ise"
+                        android:id="@+id/menu_item_16"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_sora"
+                        android:id="@+id/menu_item_17"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="228dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_mariko_doujou"
+                        android:id="@+id/menu_item_4"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_mei_doujou"
+                        android:id="@+id/menu_item_5"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_koko_doujou"
+                        android:id="@+id/menu_item_6"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_koko_doujou_hard"
+                        android:id="@+id/menu_item_10"
+                        android:layout_margin="2dp" />
+
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_oyabun_doujou"
+                        android:id="@+id/menu_item_7"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_doitsu_doujou"
+                        android:id="@+id/menu_item_14"
+                        android:layout_margin="2dp" />
+
+                    <ImageView
+                        android:layout_width="228dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_kakumei_cooking"
+                        android:id="@+id/menu_item_13"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_nop"
+                        android:id="@+id/menu_item_18"
+                        android:layout_margin="2dp" />
+                </LinearLayout>
+            </HorizontalScrollView>
+        </FrameLayout>
+
+    </LinearLayout>
+</RelativeLayout>
