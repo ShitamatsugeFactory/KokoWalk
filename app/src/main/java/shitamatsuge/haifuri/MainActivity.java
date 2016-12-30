@@ -302,6 +302,8 @@ public class MainActivity extends AppCompatActivity {
                             nextY = mapSize;// -1;
                             nextX = centerX;
 
+                            x = (float) ((nextX + 0.5f) * xSeparator);
+                            y = (float) (top + nextY * ySeparator);
                         } else {
                             for (int j = 0; j < mapSize; j++) {
                                 for (int k = 0; k < mapSize; k++) {
@@ -312,9 +314,9 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            x = (float) ((nextX + 0.6f + Math.random() / 2) * xSeparator + Math.cos(r) * (range / 2));
+                            y = (float) (top + (nextY * 0.5f + Math.random() / 2) * ySeparator - Math.sin(r) * range / 2 );
                         }
-                        x = (float) ((nextX + 0.6f + Math.random() / 2) * xSeparator + Math.cos(r) * (range / 2));
-                        y = (float) (top + (nextY * 0.5f + Math.random() / 2) * ySeparator - Math.sin(r) * range / 2 );
                         //Log.d("map", "nextX = " + nextX + " , nextY = " + nextY + " , min = " + min + " , y = " + y + " , x = " + x + " bottom " + bottom + " , right = " + right + "x " + xSeparator + " , " + ySeparator);
                     }
                     x = Math.max(left, Math.min(right, x));
