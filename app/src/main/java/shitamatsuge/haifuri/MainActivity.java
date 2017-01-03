@@ -35,6 +35,7 @@ import shitamatsuge.haifuri.CharaViews.MinamiView;
 import shitamatsuge.haifuri.CharaViews.SiroView;
 import shitamatsuge.haifuri.CharaViews.SoraView;
 import shitamatsuge.haifuri.CharaViews.ZonaView;
+import shitamatsuge.haifuri.network.HttpSendKokoCount;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +54,17 @@ public class MainActivity extends AppCompatActivity {
     ImageView mBackGround;
 
     int[] mCounter;
+    int[] mCounterPending;
+    private String mWorldCount = "???";
+    private String [] mNames = {
+            "koko", "vilhelmina", "may", "maron",
+            "", "", "", "",
+            "kantyo", "siro",
+            "",
+            "zona", "minami",
+            "", "",
+            "mikan", "ise", "sora"// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
+    };
     int mBgIndex = 0;
 
     public static Button mWashiButton;
@@ -88,10 +100,15 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_10);
 
         mCounter = new int[20];
+        mCounterPending = new int[20];
         FpsTextView fpsTextView = new FpsTextView(this);
         ((FrameLayout) findViewById(R.id.fpsTextViewFrame)).removeAllViews();
         ((FrameLayout)findViewById(R.id.fpsTextViewFrame)).addView(fpsTextView);
         fpsTextView.setText("start");
+        sendHandler = new Handler[20];
+        for (int i = 0; i < sendHandler.length; i++) {
+            sendHandler[i] = new Handler();
+        }
 
         charaViews = new ArrayList<CharaView>();
         mMenuItems[0].setOnClickListener(new View.OnClickListener() {
@@ -99,28 +116,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mWashiButton.setVisibility(View.VISIBLE);
                 manager.create(winX, winY, field, charaViews, new KokoView(getBaseContext(), null), walkSec);
-                addCounter(0);
+                setCounter(0);
             }
         });
         mMenuItems[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MiView(getBaseContext(), null), walkSec);
-                addCounter(1);
+                setCounter(1);
             }
         });
         mMenuItems[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MayView(getBaseContext(), null), walkSec);
-                addCounter(2);
+                setCounter(2);
             }
         });
         mMenuItems[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MaronView(getBaseContext(), null), walkSec);
-                addCounter(3);
+                setCounter(3);
             }
         });
         mMenuItems[4].setOnClickListener(new View.OnClickListener() {
@@ -165,14 +182,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new ZonaView(getBaseContext(), null), walkSec);
-                addCounter(8);
+                setCounter(8);
             }
         });
         mMenuItems[9].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MikeView(getBaseContext(), null), walkSec);
-                addCounter(9);
+                setCounter(9);
             }
         });
         mMenuItems[10].setOnClickListener(new View.OnClickListener() {
@@ -189,14 +206,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new SiroView(getBaseContext(), null), walkSec);
-                addCounter(11);
+                setCounter(11);
             }
         });
         mMenuItems[12].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MinamiView(getBaseContext(), null), walkSec);
-                addCounter(12);
+                setCounter(12);
             }
         });
         mMenuItems[13].setOnClickListener(new View.OnClickListener() {
@@ -223,21 +240,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MikanView(getBaseContext(), null), walkSec);
-                addCounter(15);
+                setCounter(15);
             }
         });
         mMenuItems[16].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new IseView(getBaseContext(), null), walkSec);
-                addCounter(16);
+                setCounter(16);
             }
         });
         mMenuItems[17].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new SoraView(getBaseContext(), null), walkSec);
-                addCounter(17);
+                setCounter(17);
             }
         });
         washiHandler = new Handler();
@@ -498,7 +515,6 @@ public class MainActivity extends AppCompatActivity {
         protected void onDraw(final Canvas canvas) {
             super.onDraw(canvas);
             final long time = System.currentTimeMillis();
-            Log.d("test", INTERVAL + " , " + (time - mTime));
             if ( INTERVAL < time - mTime ) {
                 final double fps = mCount * 1000.0 / (time - mTime);
                 mCount = 0;
@@ -515,5 +531,39 @@ public class MainActivity extends AppCompatActivity {
             }
             invalidate();
         }
+    }
+
+    private HttpSendKokoCount.onCompleteHandler createCompleteHandler(final int id) {
+        HttpSendKokoCount.onCompleteHandler completeHandler = new HttpSendKokoCount.onCompleteHandler() {
+            @Override
+            public void successHandler(String count) {
+                mCounterPending[id] = 0;
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("世界中でおよそ " + count + " x ココ！");
+                mWorldCount = count;
+            }
+
+            @Override
+            public void errorHandler(String count) {
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("サーバーと通信できませんでした");
+            }        };
+        return completeHandler;
+    }
+
+    private Handler []sendHandler;
+    private void setCounter(final int id) {
+        mCounterPending[id] ++;
+        final String [] params = {mNames[id], String.valueOf(mCounterPending[id])};
+        // 連打対策をココに
+        ((TextView)findViewById(R.id.worldCounterTextView)).setText("(通信待ち)世界中でおよそ " + mWorldCount + " x ココ！");
+        sendHandler[id].removeCallbacksAndMessages(null);
+        sendHandler[id].postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("(通信中)世界中でおよそ " + mWorldCount + " x ココ！");
+                new HttpSendKokoCount().send(params, createCompleteHandler(id));
+            }
+        }, 2000);
+
+        addCounter(id);
     }
 }
