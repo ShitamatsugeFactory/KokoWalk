@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     int[] mCounter;
     int[] mCounterPending;
+    private String mWorldCount = "???";
     private String [] mNames = {
             "koko", "vilhelmina", "may", "maron",
             "", "", "", "",
@@ -538,6 +539,7 @@ public class MainActivity extends AppCompatActivity {
             public void successHandler(String count) {
                 mCounterPending[id] = 0;
                 ((TextView)findViewById(R.id.worldCounterTextView)).setText("世界中でおよそ " + count + " x ココ！");
+                mWorldCount = count;
             }
 
             @Override
@@ -552,11 +554,12 @@ public class MainActivity extends AppCompatActivity {
         mCounterPending[id] ++;
         final String [] params = {mNames[id], String.valueOf(mCounterPending[id])};
         // 連打対策をココに
-        ((TextView)findViewById(R.id.worldCounterTextView)).setText("2秒間操作がなければ\nサーバーと通信します");
+        ((TextView)findViewById(R.id.worldCounterTextView)).setText("(通信待ち)世界中でおよそ " + mWorldCount + " x ココ！");
         sendHandler[id].removeCallbacksAndMessages(null);
         sendHandler[id].postDelayed(new Runnable() {
             @Override
             public void run() {
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("(通信中)世界中でおよそ " + mWorldCount + " x ココ！");
                 new HttpSendKokoCount().send(params, createCompleteHandler(id));
             }
         }, 2000);
