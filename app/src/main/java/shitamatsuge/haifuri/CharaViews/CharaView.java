@@ -1,24 +1,21 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * Created by user1 on 2016/05/29.
- */
+import shitamatsuge.haifuri.MainActivity;
+import shitamatsuge.haifuri.R;
+
 public class CharaView extends LinearLayout {
     private String TAG = "CharaView";
 
@@ -81,7 +78,7 @@ public class CharaView extends LinearLayout {
             if (r > 0.7) {
                 mRandomActionNext = true;
             }
-            Log.d(TAG, "mRandomActionCounter = " + mRandomActionCounter);
+
             if(!mLock) {
                 if (mRandomActionNext && mRandomActionCounter == 0) {
                     mRandomActionCounter = 2;
@@ -93,6 +90,7 @@ public class CharaView extends LinearLayout {
             }
         }
     }
+
     public void walk(View v, float addX, float addY, int mSec) {
         //while(Math.abs(mCurrentX-addX)/(mSec/5) > 1)mSec *= 2;
         if(mLock)return ;
@@ -104,14 +102,11 @@ public class CharaView extends LinearLayout {
     public void moveX(View v, float addX, int mSec) {
         move(v, addX, 0, 0, mSec);
     }
-
     public void moveY(View v, float addY, int mSec) {
         move(v, 0, addY, 0, mSec);
     }
-
     public void move(View v, float addX, float addY, float rad, int mSec) {
         if(mLock)return ;
-        // lockが必要
 
         if(addX > 0)mDirection = 1;
         else mDirection = 0;
@@ -120,7 +115,6 @@ public class CharaView extends LinearLayout {
         PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat("translationY", mCurrentY, mCurrentY + addY);
         PropertyValuesHolder holderRotaion = PropertyValuesHolder.ofFloat("rotation", mCurrentRad, mCurrentRad + rad);
 
-        // targetに対してholderX, holderY, holderRotationを同時に実行させます
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(v, holderX, holderY, holderRotaion);
         objectAnimator.setDuration(mSec);
         objectAnimator.start();
@@ -137,7 +131,6 @@ public class CharaView extends LinearLayout {
         PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat("translationY", mCurrentY, addY);
         PropertyValuesHolder holderRotaion = PropertyValuesHolder.ofFloat("rotation", mCurrentRad, mCurrentRad + rad);
 
-        // targetに対してholderX, holderY, holderRotationを同時に実行させます
         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(v, holderX, holderY, holderRotaion);
         objectAnimator.setDuration(mSec);
 
@@ -218,7 +211,7 @@ public class CharaView extends LinearLayout {
         }
     }
 
-    int MAX_CHARA = 128;
+    int MAX_CHARA = 65535;
     public void create(float winX, float winY,FrameLayout field, ArrayList<CharaView> charaViews,CharaView chara, int walkSec) {
         try {
             if (charaViews.size() >= MAX_CHARA) {
@@ -251,7 +244,7 @@ public class CharaView extends LinearLayout {
             objectAnimator.start();
             //button.setText("納沙幸子 * " + charaViews.size());
         } catch (OutOfMemoryError e){
-            Toast.makeText(field.getContext(), "メモリがいっぱいです",Toast.LENGTH_SHORT).show();
+            Toast.makeText(field.getContext(), "メモリがいっぱいです : " + charaViews.size() + "人",Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -412,10 +405,7 @@ public class CharaView extends LinearLayout {
                     mTouchDowner[0].setVisibility(INVISIBLE);
                     mTouchDowner[1].setVisibility(INVISIBLE);
                 }
-            }, currentSec+10);
+            }, currentSec + 10);
         }
     }
-
-
-
 }

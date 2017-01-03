@@ -12,9 +12,6 @@ import android.widget.ImageView;
 import android.os.Handler;
 import android.widget.RelativeLayout;
 
-/**
- * Created by user1 on 2016/07/08.
- */
 public class Suica extends ImageView {
     protected float startX , startY;
     protected float endX, endY;

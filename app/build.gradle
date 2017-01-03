@@ -8,8 +8,8 @@ android {
         applicationId "shitamatsuge.haifuri"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 20
-        versionName "2.0.0"
+        versionCode 21
+        versionName "3.0.0"
     }
     buildTypes {
         release {

@@ -1,4 +1,4 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import shitamatsuge.haifuri.R;
+
 /**
  * Created by user1 on 2016/05/29.
  */
-public class ZonaView extends CharaView {
+public class SiroView extends CharaView {
     private String TAG = "CharaView";
 
-    public ZonaView(Context context, AttributeSet attrs) {
+    public SiroView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.zona, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.siro, this);
         mBase = (FrameLayout)findViewById(R.id.parent);
         mNormal = new FrameLayout[2];
         mWalk = new FrameLayout[6];
@@ -57,15 +59,23 @@ public class ZonaView extends CharaView {
 
     @Override
     protected void setRandomActionImage() {
-        int r = (int)(Math.random() * 1);
+        int r = (int)(Math.random() * 4);
         switch (r) {
             case 0:
-                mRandomAction[0].setBackgroundResource(R.drawable.zona_p);
-                mRandomAction[1].setBackgroundResource(R.drawable.zona_p_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.siro_oko);
+                mRandomAction[1].setBackgroundResource(R.drawable.siro_oko_r);
+                break;
+            case 1:
+                mRandomAction[0].setBackgroundResource(R.drawable.siro_same1);
+                mRandomAction[1].setBackgroundResource(R.drawable.siro_same1_r);
+                break;
+            case 2:
+                mRandomAction[0].setBackgroundResource(R.drawable.siro_same2);
+                mRandomAction[1].setBackgroundResource(R.drawable.siro_same2_r);
                 break;
             default:
-                mRandomAction[0].setBackgroundResource(R.drawable.zona_p);
-                mRandomAction[1].setBackgroundResource(R.drawable.zona_p_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.mayone_zu);
+                mRandomAction[1].setBackgroundResource(R.drawable.mayone_zu_r);
                 break;
         }
     }}

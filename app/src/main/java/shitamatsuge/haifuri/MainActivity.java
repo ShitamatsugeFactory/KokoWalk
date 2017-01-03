@@ -2,28 +2,40 @@ package shitamatsuge.haifuri;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.animation.ObjectAnimator;
-import android.os.*;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.logging.*;
+
+import shitamatsuge.haifuri.CharaViews.CharaView;
+import shitamatsuge.haifuri.CharaViews.IseView;
+import shitamatsuge.haifuri.CharaViews.KokoView;
+import shitamatsuge.haifuri.CharaViews.MaronView;
+import shitamatsuge.haifuri.CharaViews.MayView;
+import shitamatsuge.haifuri.CharaViews.MiView;
+import shitamatsuge.haifuri.CharaViews.MikanView;
+import shitamatsuge.haifuri.CharaViews.MikeView;
+import shitamatsuge.haifuri.CharaViews.MinamiView;
+import shitamatsuge.haifuri.CharaViews.SiroView;
+import shitamatsuge.haifuri.CharaViews.SoraView;
+import shitamatsuge.haifuri.CharaViews.ZonaView;
+import shitamatsuge.haifuri.network.HttpSendKokoCount;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +52,19 @@ public class MainActivity extends AppCompatActivity {
     CharaView manager;
     FrameLayout field;
     ImageView mBackGround;
-    int cocoCnt = 0;
+
+    int[] mCounter;
+    int[] mCounterPending;
+    private String mWorldCount = "???";
+    private String [] mNames = {
+            "koko", "vilhelmina", "may", "maron",
+            "", "", "", "",
+            "kantyo", "siro",
+            "",
+            "zona", "minami",
+            "", "",
+            "mikan", "ise", "sora"// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
+    };
     int mBgIndex = 0;
 
     public static Button mWashiButton;
@@ -60,54 +84,60 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[1] = (ImageView)findViewById(R.id.menu_item_1);
         mMenuItems[2] = (ImageView)findViewById(R.id.menu_item_2);
         mMenuItems[3] = (ImageView)findViewById(R.id.menu_item_3);
-        mMenuItems[4] = (ImageView)findViewById(R.id.menu_item_4);
-        mMenuItems[5] = (ImageView)findViewById(R.id.menu_item_5);
-        mMenuItems[6] = (ImageView)findViewById(R.id.menu_item_6);
-        mMenuItems[7] = (ImageView)findViewById(R.id.menu_item_7);
-        mMenuItems[8] = (ImageView)findViewById(R.id.menu_item_8);
-        mMenuItems[9] = (ImageView)findViewById(R.id.menu_item_9);
-        mMenuItems[10] = (ImageView)findViewById(R.id.menu_item_10);
-        mMenuItems[11] = (ImageView)findViewById(R.id.menu_item_11);
-        mMenuItems[12] = (ImageView)findViewById(R.id.menu_item_12);
-        mMenuItems[13] = (ImageView)findViewById(R.id.menu_item_13);
-        mMenuItems[14] = (ImageView)findViewById(R.id.menu_item_14);
-        mMenuItems[15] = (ImageView)findViewById(R.id.menu_item_15);
-        mMenuItems[16] = (ImageView)findViewById(R.id.menu_item_16);
-        mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_17);
+        mMenuItems[4] = (ImageView)findViewById(R.id.menu_item_naginata_01);
+        mMenuItems[5] = (ImageView)findViewById(R.id.menu_item_naginata_02);
+        mMenuItems[6] = (ImageView)findViewById(R.id.menu_item_naginata_03);
+        mMenuItems[7] = (ImageView)findViewById(R.id.menu_item_naginata_05);
+        mMenuItems[8] = (ImageView)findViewById(R.id.menu_item_6);
+        mMenuItems[9] = (ImageView)findViewById(R.id.menu_item_4);
+        mMenuItems[10] = (ImageView)findViewById(R.id.menu_item_naginata_04);
+        mMenuItems[11] = (ImageView)findViewById(R.id.menu_item_5);
+        mMenuItems[12] = (ImageView)findViewById(R.id.menu_item_7);
+        mMenuItems[13] = (ImageView)findViewById(R.id.menu_item_naginata_07);
+        mMenuItems[14] = (ImageView)findViewById(R.id.menu_item_naginata_06);
+        mMenuItems[15] = (ImageView)findViewById(R.id.menu_item_8);
+        mMenuItems[16] = (ImageView)findViewById(R.id.menu_item_9);
+        mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_10);
+
+        mCounter = new int[20];
+        mCounterPending = new int[20];
+        FpsTextView fpsTextView = new FpsTextView(this);
+        ((FrameLayout) findViewById(R.id.fpsTextViewFrame)).removeAllViews();
+        ((FrameLayout)findViewById(R.id.fpsTextViewFrame)).addView(fpsTextView);
+        fpsTextView.setText("start");
+        sendHandler = new Handler[20];
+        for (int i = 0; i < sendHandler.length; i++) {
+            sendHandler[i] = new Handler();
+        }
 
         charaViews = new ArrayList<CharaView>();
         mMenuItems[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mWashiButton.setVisibility(View.VISIBLE);
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new KokoView(getBaseContext(), null), walkSec);
-                cocoCnt++;
+                setCounter(0);
             }
         });
         mMenuItems[1].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new MiView(getBaseContext(), null), walkSec);
+                setCounter(1);
             }
         });
         mMenuItems[2].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new MayView(getBaseContext(), null), walkSec);
+                setCounter(2);
             }
         });
         mMenuItems[3].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new MaronView(getBaseContext(), null), walkSec);
+                setCounter(3);
             }
         });
         mMenuItems[4].setOnClickListener(new View.OnClickListener() {
@@ -151,17 +181,15 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[8].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new ZonaView(getBaseContext(), null), walkSec);
+                setCounter(8);
             }
         });
         mMenuItems[9].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new MikeView(getBaseContext(), null), walkSec);
+                setCounter(9);
             }
         });
         mMenuItems[10].setOnClickListener(new View.OnClickListener() {
@@ -177,17 +205,15 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[11].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new SiroView(getBaseContext(), null), walkSec);
+                setCounter(11);
             }
         });
         mMenuItems[12].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new MinamiView(getBaseContext(), null), walkSec);
+                setCounter(12);
             }
         });
         mMenuItems[13].setOnClickListener(new View.OnClickListener() {
@@ -213,25 +239,22 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[15].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new MikanView(getBaseContext(), null), walkSec);
+                setCounter(15);
             }
         });
         mMenuItems[16].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new IseView(getBaseContext(), null), walkSec);
+                setCounter(16);
             }
         });
         mMenuItems[17].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                winX = field.getMeasuredWidth();
-                winY = field.getMeasuredHeight();
                 manager.create(winX, winY, field, charaViews, new SoraView(getBaseContext(), null), walkSec);
+                setCounter(17);
             }
         });
         washiHandler = new Handler();
@@ -246,7 +269,6 @@ public class MainActivity extends AppCompatActivity {
                 PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat("translationY", 0, 0);
                 PropertyValuesHolder holderRotaion = PropertyValuesHolder.ofFloat("rotation", 0, 0);
 
-                // targetに対してholderX, holderY, holderRotationを同時に実行させます
                 ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(washiView, holderX, holderY, holderRotaion);
                 objectAnimator.setDuration(1000);
                 objectAnimator.start();
@@ -258,7 +280,6 @@ public class MainActivity extends AppCompatActivity {
                         PropertyValuesHolder holderY = PropertyValuesHolder.ofFloat("translationY", 0, 0);
                         PropertyValuesHolder holderRotaion = PropertyValuesHolder.ofFloat("rotation", 0, 0);
 
-                        // targetに対してholderX, holderY, holderRotationを同時に実行させます
                         ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(washiView, holderX, holderY, holderRotaion);
                         objectAnimator.setDuration(2000);
                         objectAnimator.start();
@@ -321,6 +342,8 @@ public class MainActivity extends AppCompatActivity {
                             nextY = mapSize;// -1;
                             nextX = centerX;
 
+                            x = (float) ((nextX + 0.5f) * xSeparator);
+                            y = (float) (top + nextY * ySeparator);
                         } else {
                             for (int j = 0; j < mapSize; j++) {
                                 for (int k = 0; k < mapSize; k++) {
@@ -331,41 +354,33 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }
                             }
+                            x = (float) ((nextX + 0.6f + Math.random() / 2) * xSeparator + Math.cos(r) * (range / 2));
+                            y = (float) (top + (nextY * 0.5f + Math.random() / 2) * ySeparator - Math.sin(r) * range / 2 );
                         }
-                        x = (float) ((nextX + 0.6f + Math.random() / 2) * xSeparator + Math.cos(r) * (range / 2));
-                        y = (float) (top + (nextY * 0.5f + Math.random() / 2) * ySeparator - Math.sin(r) * range / 2 );
                         //Log.d("map", "nextX = " + nextX + " , nextY = " + nextY + " , min = " + min + " , y = " + y + " , x = " + x + " bottom " + bottom + " , right = " + right + "x " + xSeparator + " , " + ySeparator);
                     }
-                    //x = Math.max(-winX * 0.0f, Math.min(winX * 0.7f, x));
-                    //y = Math.max(winY * 0.4f, Math.min(winY * 0.6f, y));
                     x = Math.max(left, Math.min(right, x));
                     y = Math.max(top, Math.min(bottom, y));
                     for (int j = 0; j < i && !batting; j++) {
                         float otherX = charaViews.get(j).getmCurrentX();
                         float otherY = charaViews.get(j).getmCurrentY();
-                        //if( x nearly other x and y upper other y (y<other y))batting = true;
+
                         boolean xbat = false, ybat = false;
-                        if (Math.abs(x - otherX) < Math.max(charaViews.get(j).mBase.getMeasuredWidth(), charaViews.get(j).mBase.getMeasuredWidth() * 0.2))
+                        if (Math.abs(x - otherX) < Math.max(charaViews.get(j).mBase.getMeasuredWidth(), charaViews.get(j).mBase.getMeasuredWidth() * 0.2)) {
                             xbat = true;
-                        if (y - charaViews.get(j).mBase.getMeasuredHeight() / 2 <= otherY)
-                           ybat = true;
-                        //Log.d(i + "," + j + "bat", "x,y = " + x + "," + y + "xbat = " + xbat + ", ybat = " + ybat);
-                        //Log.d(i + "," + j + "bat", "x,y = " + otherX + "," + otherY + "xbat = " + xbat + ", ybat = " + ybat);
-                        //Log.d("", "----------------");
-                        //Log.d("test : " + i + "," + j + ", " + x + "," + y + " , " + batting ,(Math.abs(x - otherX)) + " , " + charaViews.get(j).getMeasuredWidth()*0.8 + " , " + y + " , " + (otherY - Math.max(0, charaViews.get(j).getMeasuredHeight()*0.2)) );
+                        }
+                        if (y - charaViews.get(j).mBase.getMeasuredHeight() / 2 <= otherY) {
+                            ybat = true;
+                        }
                         batting = xbat && ybat;
                     }
 
-                    //if (batting) charaViews.get(i).mBase.setBackgroundColor(Color.RED);
-                    //else charaViews.get(i).mBase.setBackgroundColor(0x00000000);
-                    //System.out.println(i + " :: " + cnt + " : " + x + " , " + y + " , batting = " + batting);
                     //Log.d("mapTest", " y = " + ((y - top) / (bottom - top) * mapSize) + " , x = " + (x - left) / (right - left) * mapSize);
                     int mapY = (int)((y - top) / (bottom - top) * mapSize);
                     int mapX = (int)((x - left) / (right - left) * mapSize);
                     if (mapY >= mapSize)mapY = mapSize - 1;
                     if (mapX >= mapSize)mapX = mapSize - 1;
                     map[mapY][mapX]++;
-
                     charaViews.get(i).nextAction((View) charaViews.get(i), x, y, walkSec - 10);
                 }
 
@@ -381,16 +396,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
         final int [] bg = new int[]{
+                R.drawable.bg_01,
                 R.drawable.bg_kankyo,
                 R.drawable.bg_housuijo,
-                R.drawable.bg_kanpan,
-                R.drawable.bg_01
+                R.drawable.bg_kanpan
         };
         field.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mBackGround.setImageDrawable(getResources().getDrawable(bg[mBgIndex]));
                 mBgIndex = (mBgIndex + 1) % bg.length;
+                mBackGround.setImageDrawable(getResources().getDrawable(bg[mBgIndex]));
             }
         });
     }
@@ -416,7 +431,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             }, walkSec/2);
-            //Log.d("TEST999", "test");
         }
     }
 
@@ -432,18 +446,13 @@ public class MainActivity extends AppCompatActivity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -467,13 +476,94 @@ public class MainActivity extends AppCompatActivity {
                 charaViews.remove(0);
             }
         }
+        for (int i = 0; i < mCounter.length; i++) {
+            mCounter[i] = 0;
+        }
+        ((TextView)findViewById(R.id.counterTextView)).setText(0 + " x ココ！");
     }
 
-    //private void setButtonEnable(int index) {
-        //for(int i = 0; i < mMenuItems.length; i++) {
-            ///mMenuItems[i].setEnabled(true);
-        //}
-       // mMenuItems[index].setEnabled(false);
-    //}
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        winX = field.getMeasuredWidth();
+        winY = field.getMeasuredHeight();
+    }
 
+    private void addCounter(int index) {
+        mCounter[index]++;
+        int sum = 0;
+        for(int i = 0; i < mCounter.length; i++) {
+            sum += mCounter[i];
+        }
+        ((TextView)findViewById(R.id.counterTextView)).setText(sum + " x ココ！");
+    }
+
+    private static class FpsTextView extends TextView {
+        private int INTERVAL = 1000;
+        private long mTime = Integer.MAX_VALUE / 2;
+        private int mCount = 0;
+        DecimalFormat df = new DecimalFormat("#.00");
+
+        public FpsTextView(Context context) {
+            super(context);
+        }
+        public FpsTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        @Override
+        protected void onDraw(final Canvas canvas) {
+            super.onDraw(canvas);
+            final long time = System.currentTimeMillis();
+            if ( INTERVAL < time - mTime ) {
+                final double fps = mCount * 1000.0 / (time - mTime);
+                mCount = 0;
+                mTime = time;
+                post(new Runnable() {
+                    @Override
+                    public void run() {
+                        FpsTextView.this.setText("" + df.format(fps));//画面に表示
+                    }
+                });
+            }
+            else {
+                ++mCount;
+            }
+            invalidate();
+        }
+    }
+
+    private HttpSendKokoCount.onCompleteHandler createCompleteHandler(final int id) {
+        HttpSendKokoCount.onCompleteHandler completeHandler = new HttpSendKokoCount.onCompleteHandler() {
+            @Override
+            public void successHandler(String count) {
+                mCounterPending[id] = 0;
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("世界中でおよそ " + count + " x ココ！");
+                mWorldCount = count;
+            }
+
+            @Override
+            public void errorHandler(String count) {
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("サーバーと通信できませんでした");
+            }        };
+        return completeHandler;
+    }
+
+    private Handler []sendHandler;
+    private void setCounter(final int id) {
+        mCounterPending[id] ++;
+        final String [] params = {mNames[id], String.valueOf(mCounterPending[id])};
+        // 連打対策をココに
+        ((TextView)findViewById(R.id.worldCounterTextView)).setText("(通信待ち)世界中でおよそ " + mWorldCount + " x ココ！");
+        sendHandler[id].removeCallbacksAndMessages(null);
+        sendHandler[id].postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ((TextView)findViewById(R.id.worldCounterTextView)).setText("(通信中)世界中でおよそ " + mWorldCount + " x ココ！");
+                new HttpSendKokoCount().send(params, createCompleteHandler(id));
+            }
+        }, 2000);
+
+        addCounter(id);
+    }
 }

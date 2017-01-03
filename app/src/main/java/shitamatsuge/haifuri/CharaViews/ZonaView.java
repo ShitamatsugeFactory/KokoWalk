@@ -1,4 +1,4 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,15 +6,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import shitamatsuge.haifuri.R;
+
 /**
  * Created by user1 on 2016/05/29.
  */
-public class MikanView extends CharaView {
+public class ZonaView extends CharaView {
     private String TAG = "CharaView";
 
-    public MikanView(Context context, AttributeSet attrs) {
+    public ZonaView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.mikan, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.zona, this);
         mBase = (FrameLayout)findViewById(R.id.parent);
         mNormal = new FrameLayout[2];
         mWalk = new FrameLayout[6];
@@ -57,23 +59,15 @@ public class MikanView extends CharaView {
 
     @Override
     protected void setRandomActionImage() {
-        int r = (int)(Math.random() * 3);
+        int r = (int)(Math.random() * 1);
         switch (r) {
             case 0:
-                mRandomAction[0].setBackgroundResource(R.drawable.mikan_katsu);
-                mRandomAction[1].setBackgroundResource(R.drawable.mikan_katsu_r);
-                break;
-            case 1:
-                mRandomAction[0].setBackgroundResource(R.drawable.mikan_keki);
-                mRandomAction[1].setBackgroundResource(R.drawable.mikan_keki_r);
-                break;
-            case 2:
-                mRandomAction[0].setBackgroundResource(R.drawable.mikan_sasimi);
-                mRandomAction[1].setBackgroundResource(R.drawable.mikan_sasimi_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.zona_p);
+                mRandomAction[1].setBackgroundResource(R.drawable.zona_p_r);
                 break;
             default:
-                mRandomAction[0].setBackgroundResource(R.drawable.mikan_keki);
-                mRandomAction[1].setBackgroundResource(R.drawable.mikan_keki_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.zona_p);
+                mRandomAction[1].setBackgroundResource(R.drawable.zona_p_r);
                 break;
         }
     }}

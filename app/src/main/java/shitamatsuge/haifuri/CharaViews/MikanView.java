@@ -1,4 +1,4 @@
-package shitamatsuge.haifuri;
+package shitamatsuge.haifuri.CharaViews;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -6,20 +6,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import shitamatsuge.haifuri.R;
+
 /**
  * Created by user1 on 2016/05/29.
  */
-public class washiView extends CharaView {
+public class MikanView extends CharaView {
     private String TAG = "CharaView";
 
-    public washiView(Context context, AttributeSet attrs) {
+    public MikanView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.mi_na, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.mikan, this);
         mBase = (FrameLayout)findViewById(R.id.parent);
         mNormal = new FrameLayout[2];
         mWalk = new FrameLayout[6];
         mTouchUpper = new FrameLayout[2];
         mTouchDowner = new FrameLayout[2];
+        mRandomAction = new FrameLayout[2];
 
         mNormal[0] = (FrameLayout)findViewById(R.id.normal);
         mNormal[1] = (FrameLayout)findViewById(R.id.normal_r);
@@ -37,6 +40,8 @@ public class washiView extends CharaView {
         mTouchDowner[0] = (FrameLayout)findViewById(R.id.downer);
         mTouchDowner[1] = (FrameLayout)findViewById(R.id.downer_r);
 
+        mRandomAction[0] = (FrameLayout)findViewById(R.id.random);
+        mRandomAction[1] = (FrameLayout)findViewById(R.id.random_r);
         ((FrameLayout)findViewById(R.id.touch_up)).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,4 +57,25 @@ public class washiView extends CharaView {
 
     }
 
-}
+    @Override
+    protected void setRandomActionImage() {
+        int r = (int)(Math.random() * 3);
+        switch (r) {
+            case 0:
+                mRandomAction[0].setBackgroundResource(R.drawable.mikan_katsu);
+                mRandomAction[1].setBackgroundResource(R.drawable.mikan_katsu_r);
+                break;
+            case 1:
+                mRandomAction[0].setBackgroundResource(R.drawable.mikan_keki);
+                mRandomAction[1].setBackgroundResource(R.drawable.mikan_keki_r);
+                break;
+            case 2:
+                mRandomAction[0].setBackgroundResource(R.drawable.mikan_sasimi);
+                mRandomAction[1].setBackgroundResource(R.drawable.mikan_sasimi_r);
+                break;
+            default:
+                mRandomAction[0].setBackgroundResource(R.drawable.mikan_keki);
+                mRandomAction[1].setBackgroundResource(R.drawable.mikan_keki_r);
+                break;
+        }
+    }}
