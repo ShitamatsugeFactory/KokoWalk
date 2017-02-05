@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -144,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataActivity.class);
+                intent.putExtra("part", "marikoojisan");
                 initCharaViews();
                 startActivity(intent);
             }
@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_may);
+                intent.putExtra("part", "may");
                 initCharaViews();
                 startActivity(intent);
             }
@@ -163,6 +164,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_koko);
+                intent.putExtra("part", "koko");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -173,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_oyabun);
+                intent.putExtra("part", "oyabun");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -197,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_koko_hard);
+                intent.putExtra("part", "koko_hard");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -231,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_doitsujin);
+                intent.putExtra("part", "doitsujin");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);

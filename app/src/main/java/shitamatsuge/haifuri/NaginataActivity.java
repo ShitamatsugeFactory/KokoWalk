@@ -1,20 +1,36 @@
 package shitamatsuge.haifuri;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.net.URLDecoder;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import shitamatsuge.haifuri.network.HttpSendDoujouRanking;
 
 public class NaginataActivity extends Activity {
     Runnable mRunnableUpperLeft;
@@ -27,6 +43,7 @@ public class NaginataActivity extends Activity {
     Runnable mRunnableDamageRight;
     Handler mHandler;
     Handler mCharaHandler;
+    String mPart;
 
     Button[] buttons;
     ImageView [] mCharaUp;
@@ -35,6 +52,7 @@ public class NaginataActivity extends Activity {
 
     Button[] damageButtons;
     ImageView [] mCharaDamage;
+    boolean mRankingFiag = true;
 
     boolean mAutoMode = true;
 
@@ -56,6 +74,7 @@ public class NaginataActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPart = getIntent().getStringExtra("part");
         setContentView(R.layout.activity_naginata);
 
         backGround = (FrameLayout)findViewById(R.id.backGround);
@@ -124,6 +143,15 @@ public class NaginataActivity extends Activity {
                 addSuica();
                 if (TIME_LIMIT - mTimerCnt < 0) {
                     mRunning = false;
+
+                    showRankingDialog();
+                    backGround.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showRankingDialog();
+                        }
+                    });
+
                 }
                 if(mRunning) {
                     int offsetParam = mDoitsu ? 100 : 600;
@@ -377,8 +405,8 @@ public class NaginataActivity extends Activity {
             @Override
             public void run() {
                 mScore += suica.getScore();
-                mScoreView.setText(mScore + " pt(ver:" + mVersion +")");
-                Log.d("test", "new record ? . " + mScore + " , " + maxScore + " , " +  (mScore > maxScore));
+                mScoreView.setText(mScore + " pt(ver:" + mVersion + ")");
+                Log.d("test", "new record ? . " + mScore + " , " + maxScore + " , " + (mScore > maxScore));
                 if (mScore > maxScore) {
                     maxScore = mScore;
                     if (mHard) {
@@ -386,16 +414,16 @@ public class NaginataActivity extends Activity {
                     } else {
                         maxScoreView.setText(maxScore + " pt(ver:" + mVersion + ")");
                     }
-                   if(mPreference == null) {
-                       mPreference = getSharedPreferences("NAGINATA", MODE_ENABLE_WRITE_AHEAD_LOGGING);
-                   }
+                    if (mPreference == null) {
+                        mPreference = getSharedPreferences("NAGINATA", MODE_ENABLE_WRITE_AHEAD_LOGGING);
+                    }
                     SharedPreferences.Editor editor = mPreference.edit();
                     editor.putLong("maxScore", maxScore);
                     editor.apply();
                 }
                 backGround.removeView(suica);
             }
-        },timer * 2);
+        }, timer * 2);
     }
 
 
@@ -414,5 +442,108 @@ public class NaginataActivity extends Activity {
         if (TimerHandler != null) {
             TimerHandler.removeCallbacksAndMessages(null);
         }
+    }
+
+    private void showRankingDialog() {
+        if (!mRankingFiag) return;
+        final EditText editText = new EditText(NaginataActivity.this);
+        InputFilter inputFilter = new InputFilter() {
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                if (source.toString().matches("^[0-9a-zA-Z@¥.¥_¥¥-]+$")) {
+                    return source;
+                } else {
+                    return "";
+                }
+            }
+        };
+        InputFilter[] filters = new InputFilter[] { inputFilter };
+        editText.setFilters(filters);
+        editText.setInputType(InputType.TYPE_TEXT_VARIATION_URI);
+        new AlertDialog.Builder(NaginataActivity.this)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle("なまえを入力してください(アルファベットのみ32文字まで)")
+                        //setViewにてビューを設定します。
+                .setView(editText)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String name = editText.getText().toString();
+                        String part = mPart;
+                        long score = mScore;
+
+                        if (name == null || name.length() == 0) {
+                            name = "no_name";
+                        } else if (name.length() > 32) {
+                            name = name.substring(0,32);
+                        }
+
+                        HttpSendDoujouRanking httpSendDoujouRanking = new HttpSendDoujouRanking();
+                        httpSendDoujouRanking.send(part, name, score, new HttpSendDoujouRanking.onCompleteHandler() {
+                            @Override
+                            public void successHandler(String resultStr) {
+                                mRankingFiag = false;
+                                //Log.d("HttpSendDoujouRanking", "successHandler : " + resultStr);
+                                try {
+                                    JSONObject result = new JSONObject(URLDecoder.decode(resultStr, "UTF-8"));
+                                    if (result.has("ranking")) {
+                                        long user_rank = result.getLong("user_rank");
+                                        String dialogMessage = "  " + mScore + "点 : ";
+                                        JSONArray ranking = result.getJSONArray("ranking");
+                                        if (ranking.length() < 10 && user_rank == -1) {
+                                            user_rank = ranking.length() + 1;
+                                        }
+                                        if (user_rank != -1) {
+                                            dialogMessage += "あなたは " + user_rank + "位です！";
+                                        } else {
+                                            dialogMessage += "あなたは ランク外 です！";
+                                        }
+                                        for (int i = 0; i < ranking.length(); i++) {
+                                            JSONObject object = ranking.getJSONObject(i < user_rank ? i : i + 1);
+                                            //Log.d("HttpSendDoujouRanking", i + " : rank = " + object.getString("rank") + " ," +object.getString("name") + " , " + object.getString("score"));
+                                            dialogMessage += "\n";
+                                            String rank = object.getString("rank");
+                                            String name = object.getString("name");
+                                            String score = object.getString("score");
+                                            if (rank.length() > 2 && rank.charAt(0) == 'u' && rank.charAt(1) == '\'') {
+                                                rank = rank.substring(2, rank.length()-1);
+                                            }
+                                            if (name.length() > 2 && name.charAt(0) == 'u' && name.charAt(1) == '\'') {
+                                                name = name.substring(2, name.length()-1);
+                                            }
+                                            if (score.length() > 2 && score.charAt(0) == 'u' && score.charAt(1) == '\'') {
+                                                score = score.substring(2, score.length()-1);
+                                            }
+                                            dialogMessage += "  " + rank + "位:" + name + " " + score + "点";
+                                        }
+
+                                        ScrollView scrollView = new ScrollView(NaginataActivity.this);
+                                        TextView textView = new TextView(NaginataActivity.this);
+                                        scrollView.addView(textView);
+                                        textView.setText(dialogMessage);
+                                        new AlertDialog.Builder(NaginataActivity.this)
+                                                .setTitle("ランキング")
+                                                .setView(scrollView)
+                                                .setPositiveButton("OK", null)
+                                                .show();
+
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (NullPointerException e) {
+                                    e.printStackTrace();
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void errorHandler(String result) {
+                                Log.e("HttpSendDoujouRanking", "errorHandler : " + result );
+                            }
+                        });
+                    }
+                })
+                .show();
     }
 }
