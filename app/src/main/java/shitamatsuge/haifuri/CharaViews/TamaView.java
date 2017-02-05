@@ -11,12 +11,12 @@ import shitamatsuge.haifuri.R;
 /**
  * Created by user1 on 2016/05/29.
  */
-public class MiView extends CharaView {
+public class TamaView extends CharaView {
     private String TAG = "CharaView";
 
-    public MiView(Context context, AttributeSet attrs) {
+    public TamaView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        View view = LayoutInflater.from(context).inflate(R.layout.mi_na, this);
+        View view = LayoutInflater.from(context).inflate(R.layout.tama, this);
         mBase = (FrameLayout)findViewById(R.id.parent);
         mNormal = new FrameLayout[2];
         mWalk = new FrameLayout[6];
@@ -59,19 +59,27 @@ public class MiView extends CharaView {
 
     @Override
     protected void setRandomActionImage() {
-        int r = (int)(Math.random() * 3);
+        int r = (int)(Math.random() * 4);
         switch (r) {
             case 0:
-                mRandomAction[0].setBackgroundResource(R.drawable.washimoikou2);
-                mRandomAction[1].setBackgroundResource(R.drawable.washimoikou2_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.tama1);
+                mRandomAction[1].setBackgroundResource(R.drawable.tama1_r);
                 break;
             case 1:
-                mRandomAction[0].setBackgroundResource(R.drawable.doitu_same);
-                mRandomAction[1].setBackgroundResource(R.drawable.doitu_same_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.tama2);
+                mRandomAction[1].setBackgroundResource(R.drawable.tama2_r);
+                break;
+            case 2:
+                mRandomAction[0].setBackgroundResource(R.drawable.tama_hai);
+                mRandomAction[1].setBackgroundResource(R.drawable.tama_hai_r);
+                break;
+            case 3:
+                mRandomAction[0].setBackgroundResource(R.drawable.tama_mei);
+                mRandomAction[1].setBackgroundResource(R.drawable.tama_mei_r);
                 break;
             default:
-                mRandomAction[0].setBackgroundResource(R.drawable.mi_koko);
-                mRandomAction[1].setBackgroundResource(R.drawable.mi_koko_r);
+                mRandomAction[0].setBackgroundResource(R.drawable.tama_wi);
+                mRandomAction[1].setBackgroundResource(R.drawable.tama_wi_r);
                 break;
         }
     }}

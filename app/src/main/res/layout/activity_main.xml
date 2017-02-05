@@ -200,6 +200,13 @@
                             android:src="@drawable/menu_item_sora"
                             android:id="@+id/menu_item_10"
                             android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_tama"
+                            android:id="@+id/menu_item_11"
+                            android:layout_margin="2dp" />
+
                     </LinearLayout>>
 
                     <LinearLayout
@@ -257,6 +264,21 @@
                             android:layout_margin="2dp" />
                     </LinearLayout>
 
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_nop"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_nop"
+                        android:layout_margin="2dp" />
+                    <ImageView
+                        android:layout_width="76dp"
+                        android:layout_height="76dp"
+                        android:src="@drawable/menu_item_nop"
+                        android:layout_margin="2dp" />
                     <ImageView
                         android:layout_width="76dp"
                         android:layout_height="76dp"
