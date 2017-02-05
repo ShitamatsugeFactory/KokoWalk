@@ -9,7 +9,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,18 +22,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import shitamatsuge.haifuri.CharaViews.CharaView;
-import shitamatsuge.haifuri.CharaViews.IseView;
-import shitamatsuge.haifuri.CharaViews.KokoView;
-import shitamatsuge.haifuri.CharaViews.MaronView;
-import shitamatsuge.haifuri.CharaViews.MayView;
-import shitamatsuge.haifuri.CharaViews.MiView;
-import shitamatsuge.haifuri.CharaViews.MikanView;
-import shitamatsuge.haifuri.CharaViews.MikeView;
-import shitamatsuge.haifuri.CharaViews.MinamiView;
-import shitamatsuge.haifuri.CharaViews.SiroView;
-import shitamatsuge.haifuri.CharaViews.SoraView;
-import shitamatsuge.haifuri.CharaViews.ZonaView;
+import shitamatsuge.haifuri.CharaViews.*;
 import shitamatsuge.haifuri.network.HttpSendKokoCount;
 
 
@@ -63,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
             "",
             "zona", "minami",
             "", "",
-            "mikan", "ise", "sora"// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
+            "mikan", "ise", "sora",
+            "tama"// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
     };
     int mBgIndex = 0;
 
@@ -98,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[15] = (ImageView)findViewById(R.id.menu_item_8);
         mMenuItems[16] = (ImageView)findViewById(R.id.menu_item_9);
         mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_10);
+        mMenuItems[18] = (ImageView)findViewById(R.id.menu_item_11);
 
         mCounter = new int[20];
         mCounterPending = new int[20];
@@ -144,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataActivity.class);
+                intent.putExtra("part", "marikoojisan");
                 initCharaViews();
                 startActivity(intent);
             }
@@ -154,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_may);
+                intent.putExtra("part", "may");
                 initCharaViews();
                 startActivity(intent);
             }
@@ -163,6 +155,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_koko);
+                intent.putExtra("part", "koko");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -173,6 +166,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_oyabun);
+                intent.putExtra("part", "oyabun");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -197,6 +191,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_koko_hard);
+                intent.putExtra("part", "koko_hard");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -231,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(getBaseContext(), NaginataMayActivity.class);
                 intent.putExtra("layout",R.layout.activity_naginata_doitsujin);
+                intent.putExtra("part", "doitsujin");
                 intent.putExtra("waitTime", 100);
                 initCharaViews();
                 startActivity(intent);
@@ -255,6 +251,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new SoraView(getBaseContext(), null), walkSec);
                 setCounter(17);
+            }
+        });
+        mMenuItems[18].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.create(winX, winY, field, charaViews, new TamaView(getBaseContext(), null), walkSec);
+                setCounter(18);
             }
         });
         washiHandler = new Handler();
