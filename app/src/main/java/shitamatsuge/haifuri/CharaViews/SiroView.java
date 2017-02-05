@@ -59,7 +59,7 @@ public class SiroView extends CharaView {
 
     @Override
     protected void setRandomActionImage() {
-        int r = (int)(Math.random() * 4);
+        int r = (int)(Math.random() * 5);
         switch (r) {
             case 0:
                 mRandomAction[0].setBackgroundResource(R.drawable.siro_oko);
@@ -72,6 +72,10 @@ public class SiroView extends CharaView {
             case 2:
                 mRandomAction[0].setBackgroundResource(R.drawable.siro_same2);
                 mRandomAction[1].setBackgroundResource(R.drawable.siro_same2_r);
+                break;
+            case 3:
+                mRandomAction[0].setBackgroundResource(R.drawable.mayone_zu2);
+                mRandomAction[1].setBackgroundResource(R.drawable.mayone_zu2_r);
                 break;
             default:
                 mRandomAction[0].setBackgroundResource(R.drawable.mayone_zu);
