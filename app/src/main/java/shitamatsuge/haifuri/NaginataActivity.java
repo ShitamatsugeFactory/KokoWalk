@@ -499,7 +499,7 @@ public class NaginataActivity extends Activity {
                                             dialogMessage += "あなたは ランク外 です！";
                                         }
                                         for (int i = 0; i < ranking.length(); i++) {
-                                            JSONObject object = ranking.getJSONObject(i < user_rank ? i : i + 1);
+                                            JSONObject object = ranking.getJSONObject(i);
                                             //Log.d("HttpSendDoujouRanking", i + " : rank = " + object.getString("rank") + " ," +object.getString("name") + " , " + object.getString("score"));
                                             dialogMessage += "\n";
                                             String rank = object.getString("rank");
