@@ -19,7 +19,7 @@ public class HttpSendKokoCount extends AsyncTask<String, String, String> {
     }
     private int mIndex = -1;
     private onCompleteHandler mCompleteHandler;
-    private static final String ACCESS_KEY = "ココだけの秘密";
+    private static final String ACCESS_KEY = "09110921331094";
 
     @Override
     protected void onPreExecute() {
