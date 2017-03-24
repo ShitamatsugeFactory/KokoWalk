@@ -58,7 +58,7 @@ public class NaginataActivity extends Activity {
 
     protected long mScore;
     protected long maxScore;
-    String mVersion = "3.1.0";
+    String mVersion = "3.1.1";
 
     int mDirection = 0;// 0 = <-
     int mWaitTime = 400;
