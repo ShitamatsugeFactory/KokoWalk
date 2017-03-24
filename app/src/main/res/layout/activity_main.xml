@@ -206,6 +206,12 @@
                             android:src="@drawable/menu_item_tama"
                             android:id="@+id/menu_item_11"
                             android:layout_margin="2dp" />
+                        <ImageView
+                            android:layout_width="76dp"
+                            android:layout_height="76dp"
+                            android:id="@+id/menu_item_12"
+                            android:src="@drawable/menu_item_mocha"
+                            android:layout_margin="2dp" />
 
                     </LinearLayout>>
 
@@ -264,11 +270,6 @@
                             android:layout_margin="2dp" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="76dp"
-                        android:layout_height="76dp"
-                        android:src="@drawable/menu_item_nop"
-                        android:layout_margin="2dp" />
                     <ImageView
                         android:layout_width="76dp"
                         android:layout_height="76dp"

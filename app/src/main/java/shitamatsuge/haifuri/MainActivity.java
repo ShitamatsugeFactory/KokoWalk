@@ -52,7 +52,8 @@ public class MainActivity extends AppCompatActivity {
             "zona", "minami",
             "", "",
             "mikan", "ise", "sora",
-            "tama"// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
+            "tama",// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
+            "mocha"// develop終結後にrefactorでブランチ切って連番に修正(mMenuItemsをcharaとActivity起動で別枠に変更する)
     };
     int mBgIndex = 0;
 
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[16] = (ImageView)findViewById(R.id.menu_item_9);
         mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_10);
         mMenuItems[18] = (ImageView)findViewById(R.id.menu_item_11);
+        mMenuItems[19] = (ImageView)findViewById(R.id.menu_item_12);
 
         mCounter = new int[20];
         mCounterPending = new int[20];
@@ -258,6 +260,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new TamaView(getBaseContext(), null), walkSec);
                 setCounter(18);
+            }
+        });
+        mMenuItems[19].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                manager.create(winX, winY, field, charaViews, new MochaView(getBaseContext(), null), walkSec);
+                setCounter(19);
             }
         });
         washiHandler = new Handler();
