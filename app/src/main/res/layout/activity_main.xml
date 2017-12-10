@@ -268,6 +268,14 @@
                             android:src="@drawable/menu_item_kakumei_cooking"
                             android:id="@+id/menu_item_naginata_07"
                             android:layout_margin="2dp" />
+
+                        <ImageView
+                            android:layout_width="228dp"
+                            android:layout_height="76dp"
+                            android:src="@drawable/menu_item_nop"
+                            android:id="@+id/menu_item_sakakura"
+                            android:layout_margin="2dp" />
+
                     </LinearLayout>
 
                     <ImageView

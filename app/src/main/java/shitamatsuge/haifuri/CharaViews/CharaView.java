@@ -91,10 +91,10 @@ public class CharaView extends LinearLayout {
         }
     }
 
-    public void walk(View v, float addX, float addY, int mSec) {
+    public void walk(View v, float absX, float absY, int mSec) {
         //while(Math.abs(mCurrentX-addX)/(mSec/5) > 1)mSec *= 2;
         if(mLock)return ;
-        moveAbsolute(v, addX, addY, 0, mSec);
+        moveAbsolute(v, absX, absY, 0, mSec);
         walkAnimation(mSec);
     }
 

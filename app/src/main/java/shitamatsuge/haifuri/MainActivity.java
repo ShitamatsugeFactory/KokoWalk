@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         field = (FrameLayout) findViewById(R.id.field);
         mBackGround = (ImageView) findViewById(R.id.bg);
 
-        mMenuItems = new ImageView[20];
+        mMenuItems = new ImageView[21];
         mMenuItems[0] = (ImageView)findViewById(R.id.menu_item_0);
         mMenuItems[1] = (ImageView)findViewById(R.id.menu_item_1);
         mMenuItems[2] = (ImageView)findViewById(R.id.menu_item_2);
@@ -90,9 +90,10 @@ public class MainActivity extends AppCompatActivity {
         mMenuItems[17] = (ImageView)findViewById(R.id.menu_item_10);
         mMenuItems[18] = (ImageView)findViewById(R.id.menu_item_11);
         mMenuItems[19] = (ImageView)findViewById(R.id.menu_item_12);
+        mMenuItems[20] = (ImageView)findViewById(R.id.menu_item_sakakura);
 
-        mCounter = new int[20];
-        mCounterPending = new int[20];
+        mCounter = new int[21];
+        mCounterPending = new int[21];
         FpsTextView fpsTextView = new FpsTextView(this);
         ((FrameLayout) findViewById(R.id.fpsTextViewFrame)).removeAllViews();
         ((FrameLayout)findViewById(R.id.fpsTextViewFrame)).addView(fpsTextView);
@@ -267,6 +268,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 manager.create(winX, winY, field, charaViews, new MochaView(getBaseContext(), null), walkSec);
                 setCounter(19);
+            }
+        });
+        mMenuItems[20].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), SakakuraActivity.class);
+                initCharaViews();
+                startActivity(intent);
             }
         });
         washiHandler = new Handler();
