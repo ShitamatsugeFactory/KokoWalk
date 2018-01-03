@@ -22,4 +22,25 @@
         android:background="@drawable/juuji_button">
 
     </shitamatsuge.haifuri.UIParts.JuujiButton>
+
+    <Button
+        android:id="@+id/attack_button_0"
+        android:layout_width="@dimen/sakakura_attack_button_width"
+        android:layout_height="@dimen/sakakura_attack_button_width"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="80dp"
+        android:onClick="onAttackButton0"
+        android:text="銃" />
+
+    <Button
+        android:id="@+id/attack_button_1"
+        android:layout_width="@dimen/sakakura_attack_button_width"
+        android:layout_height="@dimen/sakakura_attack_button_width"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:onClick="onAttackButton1"
+        android:text="火" />
+
 </FrameLayout>

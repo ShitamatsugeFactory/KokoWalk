@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 public class JuujiButton extends FrameLayout {
     public interface JuujiListener {
         public Position onTouchRelativePosition(Position position);
+        public void onReleaseEvent();
     }
 
     final String TAG = "JuujiButton";
@@ -41,20 +42,24 @@ public class JuujiButton extends FrameLayout {
     public boolean onTouchEvent(MotionEvent ev) {
         Log.d(TAG, "onTouch , " + ev);
         if (mListener != null) {
-            if (mCenterX == 0) {
-                mLeft = this.getLeft();
-                mRight = this.getRight();
-                mTop = this.getTop();
-                mBottom = this.getBottom();
-                mCenterX = (mRight - mLeft) / 2;
-                mCenterY = (mBottom - mTop) / 2;
-                Log.d(TAG, "start : " + mLeft + ", " + mRight + ", " + mTop + ", " + mBottom);
+            if (ev.getAction() == MotionEvent.ACTION_UP) {
+                mListener.onReleaseEvent();
+            } else {
+                if (mCenterX == 0) {
+                    mLeft = this.getLeft();
+                    mRight = this.getRight();
+                    mTop = this.getTop();
+                    mBottom = this.getBottom();
+                    mCenterX = (mRight - mLeft) / 2;
+                    mCenterY = (mBottom - mTop) / 2;
+                    Log.d(TAG, "start : " + mLeft + ", " + mRight + ", " + mTop + ", " + mBottom);
+                }
+                Log.d(TAG, "touch : " + ev.getX() + " , " + ev.getY() + " , " + mCenterX + " , " + mCenterY);
+                float x = ev.getX() - mCenterX;
+                float y = ev.getY() - mCenterY;
+                float r = (float) Math.sqrt(x * x + y * y);
+                mListener.onTouchRelativePosition(new Position(x / r, y / r));
             }
-            Log.d(TAG, "touch : " + ev.getX() + " , " + ev.getY() + " , " + mCenterX + " , " + mCenterY);
-            float x = ev.getX() - mCenterX;
-            float y = ev.getY() - mCenterY;
-            float r = (float)Math.sqrt(x*x + y*y);
-            mListener.onTouchRelativePosition(new Position(x / r, y / r));
         }
         return true;
     }

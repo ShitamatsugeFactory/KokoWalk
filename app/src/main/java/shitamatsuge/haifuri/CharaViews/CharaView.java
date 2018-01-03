@@ -91,6 +91,13 @@ public class CharaView extends LinearLayout {
         }
     }
 
+    public void walkForSakakura(View v, float absX, float absY, int mSec) {
+        //while(Math.abs(mCurrentX-addX)/(mSec/5) > 1)mSec *= 2;
+        moveAbsolute(v, absX, absY, 0, mSec);
+        if(mLock)return ;
+        walkAnimation(600);
+    }
+
     public void walk(View v, float absX, float absY, int mSec) {
         //while(Math.abs(mCurrentX-addX)/(mSec/5) > 1)mSec *= 2;
         if(mLock)return ;
@@ -146,7 +153,7 @@ public class CharaView extends LinearLayout {
         move(v, 0, 0, rad, mSec);
     }
 
-    private void walkAnimation(int mSec) {
+    public void walkAnimation(int mSec) {
         if(mSec < 0)return ;
         if(!mLock) {
             if(mHandler == null)mHandler = new Handler();

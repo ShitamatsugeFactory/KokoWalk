@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/parent"
+    android:clipChildren="false"
+    android:clipToPadding="false"
     android:layout_width="@dimen/chara_width"
     android:layout_height="@dimen/chara_height"
     >
@@ -120,7 +123,6 @@
         android:visibility="invisible"
         android:id="@+id/random_r">
     </FrameLayout>
-
 
     <LinearLayout
         android:orientation="vertical"

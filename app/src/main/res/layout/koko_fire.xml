@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="@dimen/koko_fire_width"
+    android:layout_height="@dimen/chara_height"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <shitamatsuge.haifuri.CharaViews.KokoView
+        android:id="@+id/hontai_view"
+        android:layout_width="@dimen/chara_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
+    </shitamatsuge.haifuri.CharaViews.KokoView>
+
+    <ImageView
+        android:id="@+id/fire_view"
+        android:layout_width="@dimen/koko_fire_width"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:contentDescription="TODO"
+        android:cropToPadding="false"
+        android:scaleType="fitCenter"
+        android:src="@drawable/koko_fire_r"
+        android:visibility="invisible" />
+</FrameLayout>
